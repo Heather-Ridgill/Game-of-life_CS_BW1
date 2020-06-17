@@ -1,30 +1,39 @@
 # import pygame
 # start drawing
 
-import sys, pygame
-pygame.init()
+import sys
+import pygame
+import pygame.draw
 
 
-
-size = width, height = 320, 240
+BOARD_SIZE = width, height = 640, 480
 speed = [2, 2]
-black = 0, 0, 0
+DEAD_COLOR = 0, 0, 0
+ALIVE_COLOR = 255, 0, 0
 
-screen = pygame.display.set_mode(size)
 
-# ball = pygame.image.load("intro_ball.gif")
-# ballrect = ball.get_rect()
+class GameOfLife:
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode(BOARD_SIZE)
 
-    ballrect = ballrect.move(speed)
-    if ballrect.left < 0 or ballrect.right > width:
-        speed[0] = -speed[0]
-    if ballrect.top < 0 or ballrect.bottom > height:
-        speed[1] = -speed[1]
+    def run(self):
+        rect_box = pygame.draw.rect(self.screen, ALIVE_COLOR, (50, 50, 10, 10), 2)
+        print(type(rect_box))
+        print(rect_box)
 
-    screen.fill(black)
-    screen.blit(ball, ballrect)
-    pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: sys.exit()
+            self.screen.fill(DEAD_COLOR)
+
+            # screen.blit(ball, ballrect)
+            # flip = draw
+            pygame.display.flip()
+
+
+if __name__ == "__main__":
+
+    game = GameOfLife()
+    game.run()

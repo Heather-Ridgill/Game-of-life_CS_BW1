@@ -58,8 +58,7 @@ class GameOfLife:
         # print(rect_box)
         for c in range(self.num_cols):
             for r in range(self.num_rows):
-                pygame.draw.rect(self.screen, ALIVE_COLOR,
-                (int(c * BOX_SIZE + (BOX_SIZE/2)),int(r * BOX_SIZE + (BOX_SIZE/2))),int(BOX_SIZE/2),0)
+                pygame.draw.rect(self.screen, ALIVE_COLOR, (int(c*BOX_SIZE +(BOX_SIZE/2)), int(r*BOX_SIZE+(BOX_SIZE/2)), int(BOX_SIZE/2), int(BOX_SIZE/2)), 0)
         pygame.display.flip()
 
     def clear_screen(self):

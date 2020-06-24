@@ -7,30 +7,11 @@ import pygame.draw
 import random
 import time
 import tkinter as tk
+import pygame.freetype
+from pygame.sprite import Sprite
+from pygame.rect import Rect
 
 
-
-def onclick(args):
-    if args == 1:
-        print("Start Animation")
-    if args == 2:
-        print("Stop Animation")
-    if args == 3:
-        print("Clear")
-
-root = tk.Tk()
-
-
-btn1 = tk.Button(root, text="Start Animation", command=lambda:onclick(1))
-btn2 = tk.Button(root, text="Stop Animation", command=lambda:onclick(2))
-btn3 = tk.Button(root, text="Clear Grid", comman=lambda:onclick(3))
-
-# To put element in window
-btn1.pack()
-btn2.pack()
-btn3.pack()
-
-root.mainloop()
 
 BOARD_SIZE = width, height = 840, 620
 BOX_SIZE = 10
@@ -39,6 +20,18 @@ DEAD_COLOR = 0, 0, 0
 ALIVE_COLOR = 255, 0, 0
 #FPS = Frames per sec, how fast does the grid move randomly?
 MAX_FPS = 20
+font = ('Arial Bold', 14)
+
+black = (0,0,0)
+white = (255,255,255)
+
+red = (200,0,0)
+
+bright_red = (255,0,0)
+
+# gameDisplay = pygame.display.set_mode((BOARD_SIZE))
+pygame.display.set_caption('Welcome to GAME OF LIFE!!')
+clock = pygame.time.Clock()
 
 
 
@@ -91,10 +84,16 @@ class GameOfLife:
                     cell_value = value
                 self.grids[grid][r][c] = cell_value
 
+    def text_objects (text, font):
+        textSurface = font.render(text, True, black)
+        return textSurface, textSurface.get_rect()
                 
     def draw_grid(self):
         self.clear_screen()
         # rect_box = pygame.draw.rect(self.screen, ALIVE_COLOR, (50, 50, 10, 10), 2)
+        def text_objects (text, font):
+            textSurface = font.render(text, True, black)
+            return textSurface, textSurface.get_rect()
        
         for c in range(self.num_cols):
             for r in range(self.num_rows):
@@ -103,6 +102,44 @@ class GameOfLife:
                 else:
                     color = DEAD_COLOR
                 pygame.draw.rect(self.screen, color, (int(c*BOX_SIZE +(BOX_SIZE/2)), int(r*BOX_SIZE+(BOX_SIZE/2)), int(BOX_SIZE/2), int(BOX_SIZE/2)), 0)
+                pygame.draw.rect(self.screen, red, (100, 25, 600, 45))
+
+                largeText = pygame.font.Font("freesansbold.ttf", 40)
+                textSurf, textRect = text_objects ("Welcome to...GAME OF LIFE!", largeText)
+                textRect.center = ( (100+(600/2)),  (25+(45/2)) )
+                self.screen.blit(textSurf, textRect)
+
+                mouse = pygame.mouse.get_pos()
+                if 75+100 > mouse[0] > 75 and 550+50 > mouse[1] > 550:
+                    pygame.draw.rect(self.screen, bright_red, (75, 550, 100, 50))
+                else:
+                    pygame.draw.rect(self.screen, red, (75, 550, 100, 50))
+
+                smallText = pygame.font.Font("freesansbold.ttf", 20)
+                textSurf, textRect = text_objects ("Start", smallText)
+                textRect.center = ( (75+(100/2)),  (550+(50/2)) )
+                self.screen.blit(textSurf, textRect)
+
+                if 375+100 > mouse [0] > 375 and 550+50 > mouse [1] > 550:
+                    pygame.draw.rect(self.screen, bright_red, (375, 550, 100, 50))
+                else:
+                    pygame.draw.rect(self.screen, red, (375, 550, 100, 50))
+
+                smallText = pygame.font.Font("freesansbold.ttf", 20)
+                textSurf, textRect = text_objects ("Stop", smallText)
+                textRect.center = ( (375+(100/2)),  (550+(50/2)) )
+                self.screen.blit(textSurf, textRect)
+
+                if 675+100 > mouse [0] > 675 and 550+50 > mouse[1] > 550:
+                    pygame.draw.rect(self.screen, bright_red, (675, 550, 100, 50))
+                else:
+                    pygame.draw.rect(self.screen, red, (675, 550, 100, 50))
+
+                smallText = pygame.font.Font("freesansbold.ttf", 20)
+                textSurf, textRect = text_objects ("Clear", smallText)
+                textRect.center = ( (675+(100/2)),  (550+(50/2)) )
+                self.screen.blit(textSurf, textRect)
+
         pygame.display.flip()
 
     def clear_screen(self):
@@ -201,3 +238,52 @@ if __name__ == "__main__":
 
     game = GameOfLife()
     game.run()
+
+        # def onclick(args):
+    #     if args == 1:
+    #         print("Start Animation")
+    #     if args == 2:
+    #         print("Stop Animation")
+    #     if args == 3:
+    #         print("Clear")
+
+    # root = tk.Tk()
+    # font = ('Arial Bold', 14)
+
+
+    # btn1 = tk.Button(root, text="Start Animation", font=font, bg="green", fg="white", command=lambda:onclick(1))
+    # btn2 = tk.Button(root, text="Stop Animation",font=font, bg="green", fg="white", command=lambda:onclick(2))
+    # btn3 = tk.Button(root, text="Clear Grid", font=font, bg="green", fg="white", command=lambda:onclick(3))
+
+    # # To put element in window
+    # # btn1.pack()
+    # # btn2.pack()
+    # # btn3.pack()
+
+    # root.mainloop()
+
+    # def game_intro(self):
+    
+    #     self.screen = pygame.display.set_mode(BOARD_SIZE)
+            
+    #     intro = True
+
+    #     while intro:
+    #         for event in pygame.event.get():
+    #             print(event)
+    #             if event.type == pygame.QUIT:
+    #                 pygame.quit()
+    #                 quit()
+    #         gameDisplay.fill(white)
+    #         largeText = pygame.font.Font('Arial Bold, 115')
+    #         TextSurf, TextRect = text_objects('Welcome to GAME OF LIFE!!', largeText)
+    #         TextRect.center = ((display_width/2), (display_height/2))
+    #         gameDisplay.blit(TextSurf, TextRect)
+
+    #         pygame.draw.rect(gameDisplay, green, (150,450,100,50))
+
+
+
+
+    #         pygame.display.update()
+    #         clock.tick(15)

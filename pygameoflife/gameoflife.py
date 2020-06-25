@@ -11,7 +11,7 @@ import pygame.freetype
 from pygame.sprite import Sprite
 from pygame.rect import Rect
 
-pygame.init()
+
 
 BOARD_SIZE = width, height = 840, 620
 BOX_SIZE = 11
@@ -30,14 +30,11 @@ gameDisplay = pygame.display.set_mode((BOARD_SIZE))
 pygame.display.set_caption('Welcome to GAME OF LIFE!')
 clock = pygame.time.Clock()
 
-
-
-
 class GameOfLife:
 
     def __init__(self):
 
-  
+        pygame.init()
         self.screen = pygame.display.set_mode(BOARD_SIZE)
         self.clear_screen()
         # flip = draw
@@ -212,6 +209,9 @@ class GameOfLife:
                 sys.exit()  
 # Game Loop Below from pygame website "how-to" docs
     def run(self):
+        """
+        Kick off the game and loop forever until quit state.
+        """
         while True:
           if self.game_over: 
             return 
@@ -229,6 +229,9 @@ class GameOfLife:
 
 
     def cap_frame_rate(self):
+        """
+        If game is running too fast and updating frames too frequently, just wait to maintin stable framrate
+        """
         now = pygame.time.get_ticks()
         milliseconds_since_last_update = now - self.last_update_completed
 
@@ -240,7 +243,9 @@ class GameOfLife:
 
 
 if __name__ == "__main__":
-
+    """
+    Launch a game of life!
+    """
     game = GameOfLife()
     game.run()
 
